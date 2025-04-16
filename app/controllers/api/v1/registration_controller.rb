@@ -1,4 +1,4 @@
-Class Api::V1::RegistrationController < ApplicationController
+class Api::V1::RegistrationController < ApplicationController
   def create
     if email_already_exists?
       render json: { error: 'Email already exists' }, status: :unprocessable_entity
