@@ -3,7 +3,7 @@ class Api::V1::AuthenticationController < ApplicationController
     user = EventUser.find_by(email: login_params[:email])
     if user&.authenticate(params[:password])
       render json: { 
-        message: 'Login successful'
+        message: 'Login successful',
         user: EventUserSerializer.new(user),
         token: JsonWebToken.encode(sub: user.id)
         }, status: :ok
