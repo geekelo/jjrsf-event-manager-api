@@ -58,3 +58,12 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'active_model_serializers'
+gem 'bcrypt'
+gem 'jwt'
+gem 'rack-cors'
+
+gem 'twilio-ruby', '~> 7.4'
+gem 'prawn'
+gem 'prawn-table'
