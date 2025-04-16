@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post "signup" => "registration#create"
       post "login" => "authentication#create"
+
+      resources :foundation_events, only: [:index, :create, :update]
     end
   end
   # Defines the root path route ("/")
