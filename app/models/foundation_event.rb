@@ -5,6 +5,7 @@ class FoundationEvent < ApplicationRecord
   has_many :event_streaming_platforms, dependent: :destroy
 
   before_validation :generate_unique_id, on: :create
+  before_validation :set_default_image_url, on: :create
   validates :unique_id, uniqueness: true
 
   def update_status_if_needed
@@ -27,6 +28,10 @@ class FoundationEvent < ApplicationRecord
         break
       end
     end
-  end  
+  end 
+  
+  def set_default_image_url
+    self.image_url ||= 'https://i.imgur.com/48O76J4.png'
+  end
 end
   
