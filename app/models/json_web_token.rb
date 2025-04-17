@@ -3,7 +3,7 @@ class JsonWebToken
   JWT_SECRET = ENV.fetch('JWT_SECRET_KEY') { raise "JWT_SECRET_KEY is missing in environment variables" }
 
   def self.encode(payload)
-    JWT.encode(payload, JWT_SECRET_KEY, nil), 'HS256')
+    JWT.encode(payload, JWT_SECRET_KEY, nil, 'HS256')
   end
 
   def self.decode(token)
