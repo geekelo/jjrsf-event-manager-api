@@ -12,6 +12,6 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def auth_token
-    @auth_token ||= request.headers.fetch('authorization', '').split.last
+    @auth_token ||= request.headers.fetch('Authorization', '').split.last
   end
 end
