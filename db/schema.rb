@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_16_183803) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_17_123245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_streaming_platforms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "platform_name", null: false
+    t.text "embed_code"
+    t.string "embed_link"
+    t.string "visit_link"
+    t.uuid "foundation_event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["foundation_event_id"], name: "index_event_streaming_platforms_on_foundation_event_id"
+  end
 
   create_table "event_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
@@ -44,5 +55,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_16_183803) do
     t.index ["unique_id"], name: "index_foundation_events_on_unique_id", unique: true
   end
 
+  add_foreign_key "event_streaming_platforms", "foundation_events"
   add_foreign_key "foundation_events", "event_users"
 end

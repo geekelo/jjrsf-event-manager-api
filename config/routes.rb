@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post "login" => "authentication#create"
 
       resources :foundation_events, only: [:index, :create, :update]
+      resources :event_streaming_platform, only: [:index, :create, :update, :destroy]
     end
   end
   # Defines the root path route ("/")

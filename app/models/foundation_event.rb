@@ -2,6 +2,8 @@
 
 class FoundationEvent < ApplicationRecord
   belongs_to :event_user
+  has_many :event_streaming_platforms, dependent: :destroy
+
   before_validation :generate_unique_id, on: :create
   validates :unique_id, uniqueness: true
 
