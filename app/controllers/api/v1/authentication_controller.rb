@@ -1,7 +1,7 @@
 class Api::V1::AuthenticationController < ApplicationController
   def create
     user = EventUser.find_by(email: login_params[:email])
-    if user&.authenticate(params[:password])
+    if user&.authenticate(login_params[:password])
       render json: { 
         message: 'Login successful',
         user: EventUserSerializer.new(user),
