@@ -1,5 +1,5 @@
 class Api::V1::FoundationEventsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!
 
   def index
     events = current_user.foundation_events
