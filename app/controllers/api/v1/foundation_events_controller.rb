@@ -7,7 +7,7 @@ class Api::V1::FoundationEventsController < ApplicationController
     # Update the status before rendering
     events.each(&:update_status_if_needed)
   
-    render json: events.map { |event| FoundationEventSerializer.new(event) }, status: :ok
+    render json: events, each_serializer: FoundationEventSerializer, status: :ok
   end  
 
   def create
