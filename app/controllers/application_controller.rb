@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   attr_reader :current_user
 
   private
@@ -12,6 +11,6 @@ class ApplicationController < ActionController::API
   end
 
   def auth_token
-    @auth_token ||= request.headers.fetch('authorization', '').split.last
+    @auth_token ||= request.headers.fetch('Authorization', '').split.last
   end
 end
