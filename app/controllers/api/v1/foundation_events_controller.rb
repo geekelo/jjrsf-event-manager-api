@@ -28,22 +28,7 @@ class Api::V1::FoundationEventsController < ApplicationController
       return
     end
   
-    # First, permit all event_updates keys
-    permitted_updates = params.require(:event_updates).permit!
-  
-    # Then remove unwanted keys
-    updates = permitted_updates.except(
-      :controller,
-      :action,
-      :format,
-      :id,
-      :authenticity_token,
-      :commit,
-      :utf8,
-      :event_user_id
-    )
-  
-    if event.update(updates)
+    if event.update(event_updates_params)
       render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(event) }, status: :ok
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
@@ -54,5 +39,9 @@ class Api::V1::FoundationEventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :registration_deadline) 
+  end
+
+  def event_updates_params
+    params.require(:event_updates).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :registration_deadline) 
   end
 end

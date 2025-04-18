@@ -23,20 +23,8 @@ class Api::V1::EventFrontDesksController < ApplicationController
         render json: { error: 'Front desk not found' }, status: :not_found
         return
     end
-    # First, permit all front_desk_updates keys
-    permitted_updates = params.require(:front_desk_updates).permit!
-    # Then remove unwanted keys
-    updates = permitted_updates.except(
-        :controller,
-        :action,
-        :format,
-        :id,
-        :authenticity_token,
-        :commit,
-        :utf8,
-        :event_user_id
-    )
-    if front_desk.update(updates)
+
+    if front_desk.update(front_desk_updates_params)
       render json: { message: 'Front desk updated successfully', front_desk: EventFrontDeskSerializer.new(front_desk) }, status: :ok
     else
       render json: { errors: front_desk.errors.full_messages }, status: :unprocessable_entity
@@ -60,5 +48,9 @@ class Api::V1::EventFrontDesksController < ApplicationController
 
   def front_desk_params
     params.require(:event_front_desk).permit(:name, :pin)
+  end
+
+  def front_desk_updates_params
+    params.require(:front_desk_updates).permit(:name, :pin)
   end
 end
