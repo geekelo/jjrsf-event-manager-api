@@ -3,6 +3,7 @@
 class FoundationEvent < ApplicationRecord
   belongs_to :event_user
   has_many :event_streaming_platforms, dependent: :destroy
+  has_many :event_front_desks, dependent: :destroy
 
   before_validation :generate_unique_id, on: :create
   before_validation :set_default_image_url, on: :create

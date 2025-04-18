@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
       resources :foundation_events, only: [:index, :create, :update]
       resources :event_streaming_platform, only: [:index, :create, :update, :destroy]
+      resources :event_front_desks, only: [:index, :create, :update, :destroy]
     end
   end
   # Defines the root path route ("/")
