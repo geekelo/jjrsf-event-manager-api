@@ -1,6 +1,6 @@
 class Api::V1::EventFrontDesksController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_event
+  before_action :authenticate_user!, except: [:authenticate_front_desk]
+  before_action :set_event, except: [:authenticate_front_desk]
   before_action :set_front_desk, only: [:update, :destroy]
 
   def index
@@ -32,6 +32,21 @@ class Api::V1::EventFrontDesksController < ApplicationController
     else
       render json: { errors: @event_front_desk.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def authenticate_front_desk
+    event = FoundationEvent.find(params[:event_id])
+    if event.nil?
+      render json: { error: 'Event not found' }, status: :not_found
+      return
+    end
+
+    front_desk = event.event_front_desks.find_by(pin: params[:pin])
+    if front_desk.nil?
+      render json: { error: 'Invalid PIN' }, status: :unauthorized
+      return
+    end
+    render json: { message: 'Front desk authenticated successfully', front_desk: EventFrontDeskSerializer.new(front_desk) }, status: :ok
   end
 
   private
