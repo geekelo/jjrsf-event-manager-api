@@ -18,4 +18,9 @@ class ApplicationController < ActionController::API
     @event = current_user.foundation_events.find_by(id: params[:event_id])
     return render json: { error: 'Event not found' }, status: :not_found unless @event
   end
+
+  def set_user_side_event
+    @user_side_event = FoundationEvent.find_by(id: params[:event_id])
+    return render json: { error: 'Event not found' }, status: :not_found unless @user_side_event
+  end
 end

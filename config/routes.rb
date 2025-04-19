@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post "signup" => "registration#create"
       post "login" => "authentication#create"
+      post "frontdesk_auth" => "event_front_desks#authenticate_frontdesk"
+      patch "mark_attendee" => "event_attendees#mark_attendance"
 
       resources :foundation_events, only: [:index, :create, :update]
       resources :event_streaming_platform, only: [:index, :create, :update, :destroy]
