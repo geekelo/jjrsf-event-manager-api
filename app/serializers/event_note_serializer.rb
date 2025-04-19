@@ -1,5 +1,5 @@
 class EventNoteSerializer < ActiveModel::Serializer
-  attributes :id, :event_id, :note, :created_at, :updated_at
+  attributes :id, :admin_name, :content, :event_attendee_id, :created_at, :updated_at
 
   def created_at
     object.created_at.strftime('%Y-%m-%d %H:%M:%S')
