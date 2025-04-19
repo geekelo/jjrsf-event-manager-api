@@ -13,4 +13,9 @@ class ApplicationController < ActionController::API
   def auth_token
     @auth_token ||= request.headers['Authorization'].to_s.split.last
   end  
+
+  def set_event
+    @event = current_user.foundation_events.find_by(id: params[:event_id])
+    return render json: { error: 'Event not found' }, status: :not_found unless @event
+  end
 end

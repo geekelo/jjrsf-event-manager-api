@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_17_232148) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_19_003947) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_attendees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address"
+    t.string "email"
+    t.string "whatsapp"
+    t.string "phone"
+    t.string "gender"
+    t.boolean "member", default: false
+    t.string "preferred_attendance"
+    t.boolean "attended_online", default: false
+    t.boolean "attended_offline", default: false
+    t.string "otp", null: false
+    t.uuid "foundation_event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_event_attendees_on_email"
+    t.index ["foundation_event_id"], name: "index_event_attendees_on_foundation_event_id"
+    t.index ["otp"], name: "index_event_attendees_on_otp", unique: true
+  end
 
   create_table "event_front_desks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_17_232148) do
     t.index ["unique_id"], name: "index_foundation_events_on_unique_id", unique: true
   end
 
+  add_foreign_key "event_attendees", "foundation_events"
   add_foreign_key "event_front_desks", "foundation_events"
   add_foreign_key "event_streaming_platforms", "foundation_events"
   add_foreign_key "foundation_events", "event_users"
