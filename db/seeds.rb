@@ -25,7 +25,6 @@ else
   puts "Admin user already exists."
 end
 
-
 # === Admin User ===
 admin_email = 'admin@jjrsf.org'
 admin = EventUser.find_or_create_by!(email: admin_email) do |user|
@@ -56,7 +55,7 @@ puts "✔️ Event ensured: #{event.name}"
 # === Event Attendees ===
 (1..5).each do |i|
   email = "attendee#{i}@example.com"
-  attendee = EventAttendee.find_or_create_by!(email: email, foundation_event_id: event.id) do |a|
+  EventAttendee.find_or_create_by!(email: email, foundation_event_id: event.id) do |a|
     a.name = "Attendee #{i}"
     a.address = "Sample Address #{i}"
     a.whatsapp = "+23480000000#{i}"
@@ -70,12 +69,20 @@ end
 puts "✔️ 5 attendees ensured."
 
 # === Front Desk Agents ===
-[
-  { name: 'Front Desk Agent 1', pin: 'FD1001' },
-  { name: 'Front Desk Agent 2', pin: 'FD1002' }
-].each do |fd|
-  EventFrontDesk.find_or_create_by!(pin: fd[:pin], foundation_event_id: event.id) do |front_desk|
-    front_desk.name = fd[:name]
-  end
-end
+# [
+#   { name: 'Front Desk Agent 1', pin: 'FD1001' },
+#   { name: 'Front Desk Agent 2', pin: 'FD1002' }
+# ].each do |fd|
+#   front_desk = EventFrontDesk.find_by(pin: fd[:pin])
+  
+#   unless front_desk && front_desk.foundation_event_id == event.id
+#     EventFrontDesk.create!(
+#       name: fd[:name],
+#       pin: fd[:pin],
+#       foundation_event_id: event.id
+#     )
+#   end
+# end
+
 puts "✔️ 2 front desk agents ensured."
+
