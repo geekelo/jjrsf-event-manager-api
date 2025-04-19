@@ -1,4 +1,4 @@
-class EventAttendeesSerializer < ActiveModel::Serializer
+class EventAttendeeSerializer < ActiveModel::Serializer
   attributes :id,
              :name,
              :address,
