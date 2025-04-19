@@ -1,4 +1,4 @@
-class EventAttendeesController < ApplicationController
+class Api::V1::EventAttendeesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :update]
   before_action :set_event, only: [:index, :create]
   before_action :set_attendee, only: [:update]
