@@ -1,10 +1,15 @@
 class Api::V1::EventStreamingPlatformsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_event, only: [:index, :create]
+  before_action :authenticate_user!, except: [:index]
+  before_action :set_event, except: [:index]
   before_action :set_platform, only: [:update, :destroy]
 
   def index
-    platforms = @event.event_streaming_platforms
+    event = FoundationEvent.find(params[:event_id])
+    if event.nil?
+      render json: { error: 'Event not found' }, status: :not_found
+      return
+    end
+    platforms = event.event_streaming_platforms
 
     render json: platforms, each_serializer: EventStreamingPlatformSerializer, status: :ok
   end

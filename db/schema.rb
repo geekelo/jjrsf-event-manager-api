@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_19_003947) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_19_073807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_19_003947) do
     t.index ["email"], name: "index_event_attendees_on_email"
     t.index ["foundation_event_id"], name: "index_event_attendees_on_foundation_event_id"
     t.index ["otp"], name: "index_event_attendees_on_otp", unique: true
+  end
+
+  create_table "event_feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "testimony"
+    t.text "review"
+    t.string "name", default: "Anonymous"
+    t.uuid "foundation_event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["foundation_event_id"], name: "index_event_feedbacks_on_foundation_event_id"
   end
 
   create_table "event_front_desks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -86,6 +96,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_19_003947) do
   end
 
   add_foreign_key "event_attendees", "foundation_events"
+  add_foreign_key "event_feedbacks", "foundation_events"
   add_foreign_key "event_front_desks", "foundation_events"
   add_foreign_key "event_streaming_platforms", "foundation_events"
   add_foreign_key "foundation_events", "event_users"
