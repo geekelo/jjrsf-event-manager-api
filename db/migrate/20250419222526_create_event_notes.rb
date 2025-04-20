@@ -4,7 +4,7 @@ class CreateEventNotes < ActiveRecord::Migration[7.2]
       t.text :content, null: false
       t.string :admin_name, null: false
 
-      t.references :event_attendee, null: false, foreign_key: true, type: :uuid
+      t.references :event_attendee, null: true, foreign_key: true, type: :uuid
       t.references :event_quick_registration, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
