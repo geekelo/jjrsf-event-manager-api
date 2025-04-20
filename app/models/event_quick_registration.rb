@@ -1,4 +1,4 @@
-class EventAttendee < ApplicationRecord
+class EventQuickRegistration < ApplicationRecord
   belongs_to :foundation_event
   has_many :event_notes, dependent: :destroy, optional: true
 
@@ -11,7 +11,7 @@ class EventAttendee < ApplicationRecord
 
     loop do
       self.otp = SecureRandom.hex(3) # 6-character alphanumeric lowercase
-      break unless EventAttendee.exists?(otp: self.otp)
+      break unless EventQuickRegistration.exists?(otp: self.otp)
     end
   end
 end

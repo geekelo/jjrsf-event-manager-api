@@ -6,6 +6,7 @@ class FoundationEvent < ApplicationRecord
   has_many :event_front_desks, dependent: :destroy
   has_many :event_attendees, dependent: :destroy
   has_many :event_feedbacks, dependent: :destroy
+  has_many :event_quick_registrations, dependent: :destroy
 
   before_validation :generate_unique_id, on: :create
   before_validation :set_default_image_url, on: :create

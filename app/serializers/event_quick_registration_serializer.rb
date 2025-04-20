@@ -1,20 +1,5 @@
-class EventAttendeeSerializer < ActiveModel::Serializer
-  attributes :id,
-             :name,
-             :address,
-             :email,
-             :whatsapp,
-             :phone,
-             :gender,
-             :member,
-             :preferred_attendance,
-             :attended_online,
-             :attended_offline,
-             :otp,
-             :notes,
-             :foundation_event_id,
-             :created_at,
-             :updated_at
+class EventQuickRegistrationSerializer < ApplicationRecord::Serializer
+  attributes :id, :foundation_event_id, :otp, :name, :email, :phone, :attended_online, :attended_offline, :verified, :notes, :created_at, :updated_at
 
   def created_at
     object.created_at.strftime('%Y-%m-%d %H:%M:%S')
@@ -36,4 +21,3 @@ class EventAttendeeSerializer < ActiveModel::Serializer
     end
   end
 end
-
