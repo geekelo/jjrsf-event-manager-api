@@ -57,8 +57,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_19_222526) do
   create_table "event_notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content", null: false
     t.string "admin_name", null: false
-    t.uuid "event_attendee_id", null: false
-    t.uuid "event_quick_registration_id", null: false
+    t.uuid "event_attendee_id"
+    t.uuid "event_quick_registration_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_attendee_id"], name: "index_event_notes_on_event_attendee_id"

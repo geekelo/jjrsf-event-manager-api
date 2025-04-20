@@ -3,7 +3,7 @@ class CreateEventFrontDesks < ActiveRecord::Migration[7.2]
   def up
     create_table :event_front_desks, id: :uuid do |t|
       t.string :name, null: false
-      t.string :pin, null: false, unique: true
+      t.string :pin, null: false
       t.references :foundation_event, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
