@@ -1,7 +1,6 @@
 class EventQuickRegistration < ApplicationRecord
   belongs_to :foundation_event
-  has_many :event_notes, dependent: :destroy, optional: true
-
+  has_many :event_notes, dependent: :destroy
   before_validation :generate_unique_otp, on: :create
 
   private
