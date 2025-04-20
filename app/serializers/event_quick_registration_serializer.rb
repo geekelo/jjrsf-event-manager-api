@@ -1,4 +1,4 @@
-class EventQuickRegistrationSerializer < ApplicationRecord::Serializer
+class EventQuickRegistrationSerializer < ActiveModel::Serializer
   attributes :id, :foundation_event_id, :otp, :name, :email, :phone, :attended_online, :attended_offline, :verified, :notes, :created_at, :updated_at
 
   def created_at
