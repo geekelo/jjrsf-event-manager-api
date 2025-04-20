@@ -22,7 +22,7 @@ class Api::V1::FoundationEventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(event) }, status: :ok
+      render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(@event) }, status: :ok
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
     end
