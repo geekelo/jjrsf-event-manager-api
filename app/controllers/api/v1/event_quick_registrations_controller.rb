@@ -4,9 +4,8 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
   before_action :set_user_side_event, only: [:create]
   
   def index
-    @quick_registrations = @event.event_quick_registrations
-    render json: @quick_registrations, each_serializer: EventQuickRegistrationSerializer, status: :ok
-      render json: { message: 'Quick registration endpoint' }, status: :ok
+    quick_registrations = @event.event_quick_registrations
+    render json: { message: 'Quick registration endpoint', each_serializer: EventQuickRegistrationSerializer }, status: :ok
   end
 
   def create
