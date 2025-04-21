@@ -1,5 +1,5 @@
 class AttendeeMailer < ApplicationMailer
-  default from: 'no-reply@yourdomain.com'
+   default from: 'JJRSF Events Team <no-reply@yourdomain.com>'
 
   def registration_confirmation(attendee)
     @attendee = attendee
