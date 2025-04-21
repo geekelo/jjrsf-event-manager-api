@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       patch "mark_attendee" => "event_attendees#mark_attendance"
 
       resources :foundation_events, only: [:index, :create, :update]
-      resources :event_streaming_platform, only: [:index, :create, :update, :destroy]
+      resources :event_streaming_platforms, only: [:index, :create, :update, :destroy]
       resources :event_front_desks, only: [:index, :create, :update, :destroy]
       resources :event_attendees, only: [:index, :create, :update]
       resources :event_feedbacks, only: [:index, :create, :update, :destroy]
