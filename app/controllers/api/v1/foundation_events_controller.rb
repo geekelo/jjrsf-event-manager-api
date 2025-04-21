@@ -31,6 +31,6 @@ class Api::V1::FoundationEventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :registration_deadline) 
+    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :evaluation, :registration_deadline) 
   end
 end
