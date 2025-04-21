@@ -5,7 +5,7 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
   
   def index
     quick_registrations = @event.event_quick_registrations
-    render json: { message: 'Quick registration endpoint', each_serializer: EventQuickRegistrationSerializer }, status: :ok
+    render json: quick_registrations, each_serializer: EventQuickRegistrationSerializer, status: :ok
   end
 
   def create
