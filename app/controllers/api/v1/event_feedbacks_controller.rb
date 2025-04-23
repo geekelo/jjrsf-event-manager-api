@@ -1,6 +1,6 @@
 class Api::V1::EventFeedbacksController < ApplicationController
   before_action :authenticate_user!, except: [:create]
-  before_action :set_event, except: [:create]
+  before_action :set_event, except: [:create, :index]
   before_action :set_feedback, only: [:update, :destroy]
 
   def index
