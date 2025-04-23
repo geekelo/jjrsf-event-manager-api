@@ -1,6 +1,7 @@
 class Api::V1::EventFeedbacksController < ApplicationController
   before_action :authenticate_user!, except: [:create]
   before_action :set_event, except: [:create]
+  before_action :set_user_side_event, only: [:create]
   before_action :set_feedback, only: [:update, :destroy]
 
   def index
@@ -9,13 +10,12 @@ class Api::V1::EventFeedbacksController < ApplicationController
   end
 
   def create
-    event = FoundationEvent.find(params[:event_id])
-    if event.nil?
+    if @user_side_event.nil?
       render json: { error: 'Event not found' }, status: :not_found
       return
     end
 
-    feedback = event.event_feedbacks.new(feedback_params)
+    feedback = @user_side_event.event_feedbacks.new(feedback_params)
 
     if feedback.save
       render json: { message: 'Feedback created successfully', feedback: EventFeedbackSerializer.new(feedback) }, status: :created
