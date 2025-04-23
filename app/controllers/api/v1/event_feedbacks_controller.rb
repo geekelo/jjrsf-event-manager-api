@@ -2,7 +2,7 @@ class Api::V1::EventFeedbacksController < ApplicationController
   before_action :authenticate_user!, except: [:create]
   before_action :set_event, except: [:create]
   before_action :set_user_side_event, only: [:create]
-  before_action :set_feedback, only: [:update, :destroy]
+  before_action :set_feedback, only: [:destroy]
 
   def index
     feedbacks = @event.event_feedbacks
@@ -21,14 +21,6 @@ class Api::V1::EventFeedbacksController < ApplicationController
       render json: { message: 'Feedback created successfully', feedback: EventFeedbackSerializer.new(feedback) }, status: :created
     else
       render json: { errors: feedback.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @feedback.update(feedback_params)
-      render json: { message: 'Feedback updated successfully', feedback: EventFeedbackSerializer.new(@feedback) }, status: :ok
-    else
-      render json: { errors: @feedback.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
