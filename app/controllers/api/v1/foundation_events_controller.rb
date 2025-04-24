@@ -1,5 +1,5 @@
 class Api::V1::FoundationEventsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:visible_events]
   before_action :set_event, only: [:update]
 
   def index
