@@ -28,9 +28,18 @@ class Api::V1::FoundationEventsController < ApplicationController
     end
   end
 
+  def visible_events
+    events = FoundationEvent.where(visibility: true)
+  
+    # Update the status before rendering
+    events.each(&:update_status_if_needed)
+  
+    render json: events, each_serializer: FoundationEventSerializer, status: :ok
+  end
+
   private
 
   def event_params
-    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :evaluation, :registration_deadline) 
+    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :evaluation, :visibility, :registration_deadline) 
   end
 end
