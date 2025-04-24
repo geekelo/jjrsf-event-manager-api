@@ -1,5 +1,5 @@
 class Api::V1::FoundationEventsController < ApplicationController
-  before_action :authenticate_user!, except: [:visible_events]
+  before_action :authenticate_user!, except: [:show, :visible_events]
   before_action :set_event, only: [:update]
 
   def index
@@ -9,6 +9,16 @@ class Api::V1::FoundationEventsController < ApplicationController
     events.each(&:update_status_if_needed)
   
     render json: events, each_serializer: FoundationEventSerializer, status: :ok
+  end
+
+  def show
+    event = FoundationEvent.find_by(unique_id: params[:unique_id])
+    if event.nil?
+      render json: { error: 'Event not found' }, status: :not_found
+      return
+    end
+    event.update_status_if_needed
+    render json: event, serializer: FoundationEventSerializer, status: :ok
   end
 
   def create

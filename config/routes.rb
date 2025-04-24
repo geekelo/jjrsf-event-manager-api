@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       post "verify_guest" => "event_quick_registrations#verify_guest"
       get "events" => "foundation_events#visible_events"
 
-      resources :foundation_events, only: [:index, :create, :update]
+      resources :foundation_events, only: [:index, :show, :create, :update]
       resources :event_streaming_platforms, only: [:index, :create, :update, :destroy]
       resources :event_front_desks, only: [:index, :create, :update, :destroy]
       resources :event_attendees, only: [:index, :create, :update]
