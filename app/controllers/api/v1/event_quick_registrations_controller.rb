@@ -13,7 +13,8 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
       render json: { error: 'Email already exists' }, status: :unprocessable_entity
     else
       guest = EventQuickRegistration.new(guest_params)
-      if user.save
+      if guest.save
+        AttendeeMailer.registration_confirmation(guest).deliver_now
         render json: { message: 'Guest created successfully' }, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
