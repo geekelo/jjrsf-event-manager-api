@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       patch "mark_attendee" => "event_attendees#mark_attendance"
       post "verify_guest" => "event_quick_registrations#verify_guest"
       get "events" => "foundation_events#visible_events"
-      get "access_front_desk" => "event_front_desks#authenticate_front_desk"
+      post "access_front_desk" => "event_front_desks#authenticate_front_desk"
 
       resources :foundation_events, only: [:index, :show, :create, :update]
       resources :event_streaming_platforms, only: [:index, :create, :update, :destroy]
