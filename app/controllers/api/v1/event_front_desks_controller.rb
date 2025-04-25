@@ -35,13 +35,13 @@ class Api::V1::EventFrontDesksController < ApplicationController
   end
 
   def authenticate_front_desk
-    event = FoundationEvent.find(params[:event_id])
+    event = FoundationEvent.find_by(unique_id: params[:unique_id])
     if event.nil?
       render json: { error: 'Event not found' }, status: :not_found
       return
     end
 
-    front_desk = event.event_front_desks.find_by(pin: params[:pin])
+    front_desk = event.event_front_desks.find_by(pin: params[:passcode])
     if front_desk.nil?
       render json: { error: 'Invalid PIN' }, status: :unauthorized
       return
