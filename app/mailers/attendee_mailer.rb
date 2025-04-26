@@ -1,9 +1,9 @@
 class AttendeeMailer < ApplicationMailer
    default from: 'JJRSF Events Team <no-reply@yourdomain.com>'
 
-  def registration_confirmation(attendee)
+  def registration_confirmation(attendee, event)
     @attendee = attendee
-    @event = attendee.foundation_events
+    @event = event
     mail(to: @attendee.email, subject: 'Your Event Registration Details')
   end
 end
