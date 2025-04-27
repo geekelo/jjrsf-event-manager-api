@@ -1,19 +1,41 @@
-<h1>You're Registered!</h1>
-<p>Hi <%= @attendee.name %>,</p>
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; background-color: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px;">
 
-<p>You're successfully registered for <strong><%= @event.name %></strong>.</p>
-<p>Date: <strong><%= @event.start_date.strftime("%B %d, %Y") %></strong>
-- <strong><%= @event.end_date.strftime("%B %d, %Y") %></strong>
-</p>
+  <h1 style="color: #2c3e50; text-align: center;">You're Registered!</h1>
 
-<p>Location: <strong><%= @event.location %></strong></p>
-<p>Event Link: 
-  <a href="<%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>">
-    <%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>
-  </a>
-</p>
-<h3>Your assigned OTP is: <h2><strong><%= @attendee.otp %></strong></h2></h3>
+  <p style="font-size: 16px; color: #34495e;">Hi <strong><%= @attendee.name %></strong>,</p>
 
-<p>Please save this information. You’ll need it during the event.</p>
+  <p style="font-size: 16px; color: #34495e;">
+    Congratulations! You are successfully registered for:
+  </p>
 
-<p>We look forward to seeing you!</p>
+  <h2 style="color: #2980b9; text-align: center; margin-top: 10px;"><%= @event.name %></h2>
+
+  <p style="font-size: 16px; color: #34495e; margin-top: 20px;">
+    <strong>Date:</strong> <%= @event.start_date.strftime("%B %d, %Y") %> - <%= @event.end_date.strftime("%B %d, %Y") %>
+  </p>
+
+  <p style="font-size: 16px; color: #34495e;">
+    <strong>Location:</strong> <%= @event.location %>
+  </p>
+
+  <p style="font-size: 16px; color: #34495e;">
+    <strong>Event Link:</strong><br/>
+    <a href="<%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>" style="color: #3498db; word-break: break-all;">
+      <%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>
+    </a>
+  </p>
+
+  <div style="margin: 30px 0; padding: 20px; background-color: #ecf0f1; border-radius: 6px; text-align: center;">
+    <p style="font-size: 18px; color: #2c3e50;">Your Assigned OTP:</p>
+    <h2 style="font-size: 32px; color: #e74c3c; margin: 10px 0;"><strong><%= @attendee.otp %></strong></h2>
+  </div>
+
+  <p style="font-size: 16px; color: #34495e;">
+    Please save this information securely. You will need it during the event.
+  </p>
+
+  <p style="font-size: 16px; color: #34495e; margin-top: 30px;">
+    We look forward to seeing you there! 🎉
+  </p>
+
+</div>
