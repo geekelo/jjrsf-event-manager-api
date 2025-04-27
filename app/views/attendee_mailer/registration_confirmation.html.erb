@@ -8,8 +8,8 @@
 
 <p>Location: <strong><%= @event.location %></strong></p>
 <p>Event Link: 
-  <a href="<%= "#{ENV['FRONTEND_URL']}/events/#{@event.unique_id}" %>">
-    <%= "#{ENV['FRONTEND_URL']}/events/#{@event.unique_id}" %>
+  <a href="<%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>">
+    <%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>
   </a>
 </p>
 <h3>Your assigned OTP is: <h2><strong><%= @attendee.otp %></strong></h2></h3>
