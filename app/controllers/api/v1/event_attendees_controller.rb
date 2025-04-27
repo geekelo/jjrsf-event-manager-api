@@ -34,15 +34,18 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
 
   def mark_attendance
-    attendee = if params[:unique_id].present?
-                 @user_side_event.event_attendees.find_by(unique_id: params[:unique_id])
+    attendee = if params[:otp].present?
+                 @user_side_event.event_attendees.find_by(otp: params[:otp]) ||
+                 @user_side_event.event_quick_registrations.find_by(otp: params[:otp])
                elsif params[:email].present?
-                @user_side_event.event_attendees.find_by(email: params[:email])
+                @user_side_event.event_attendees.find_by(email: params[:email]) ||
+                @user_side_event.event_quick_registrations.find_by(email: params[:email])
                end
   
     return render json: { error: 'Unique ID or email is required' }, status: :unprocessable_entity unless attendee
   
-    mode = params[:mode] # expects 'online' or 'offline'
+    mode = params[:mode].to_s.downcase # expects 'online' or 'offline'
+    
     case mode
     when 'online'
       success = attendee.update(attended_online: true)
@@ -54,8 +57,7 @@ class Api::V1::EventAttendeesController < ApplicationController
 
     if success
       render json: {
-        message: 'Attendee marked as attended online successfully',
-        attendee: EventAttendeeSerializer.new(attendee)
+        message: 'Attendee marked as attended successfully',
       }, status: :ok
     else
       render json: { errors: attendee.errors.full_messages }, status: :unprocessable_entity
@@ -63,6 +65,7 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
   
   private
+
   def set_attendee
     @attendee = @event.event_attendees.find_by(id: params[:id])
     return render json: { error: 'Attendee not found' }, status: :not_found unless @attendee
