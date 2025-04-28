@@ -45,7 +45,7 @@ class Api::V1::EventAttendeesController < ApplicationController
     return render json: { error: 'Unique ID or email is required' }, status: :unprocessable_entity unless attendee
   
     mode = params[:mode].to_s.downcase # expects 'online' or 'offline'
-    
+
     case mode
     when 'online'
       success = attendee.update(attended_online: true)
@@ -58,6 +58,7 @@ class Api::V1::EventAttendeesController < ApplicationController
     if success
       render json: {
         message: 'Attendee marked as attended successfully',
+        attendee: EventAttendeeSerializer.new(attendee) || EventQuickRegistrationSerializer.new(attendee)
       }, status: :ok
     else
       render json: { errors: attendee.errors.full_messages }, status: :unprocessable_entity
