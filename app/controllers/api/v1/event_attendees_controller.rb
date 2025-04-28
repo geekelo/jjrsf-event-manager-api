@@ -19,6 +19,7 @@ class Api::V1::EventAttendeesController < ApplicationController
 
     if attendee.save
       AttendeeMailer.registration_confirmation(attendee, @user_side_event).deliver_now
+      AttendeeMailer.registration_notification(attendee, @user_side_event).deliver_now
       render json: { message: 'You have successfully registered', attendee: EventAttendeeSerializer.new(attendee) }, status: :created
     else
       render json: { errors: attendee.errors.full_messages }, status: :unprocessable_entity
