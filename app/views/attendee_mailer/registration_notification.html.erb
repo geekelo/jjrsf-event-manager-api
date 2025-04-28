@@ -31,6 +31,11 @@
     <strong>Member:</strong> <%= @attendee.member? ? 'Yes' : 'No' %>
   </p>
 
+  <div style="margin: 30px 0; padding: 20px; background-color: #ecf0f1; border-radius: 6px; text-align: center;">
+    <p style="font-size: 18px; color: #2c3e50;">Assigned OTP to Guest:</p>
+    <h2 style="font-size: 32px; color: #e74c3c; margin: 10px 0;"><strong><%= @attendee.otp %></strong></h2>
+  </div>
+
   <p style="font-size: 14px; color: #2d3436; margin: 5px 0;">
     <strong>Preferred Attendance:</strong> 
     <%= @attendee.preferred_attendance.presence || 'Not specified' %>
