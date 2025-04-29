@@ -1,6 +1,6 @@
 class Api::V1::EventAttendeesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :update]
-  before_action :set_event, only: [:index, :update]
+  before_action :authenticate_user!, only: [:index, :update, :notify_attendees, :unique_attendees]
+  before_action :set_event, only: [:index, :update, :notify_attendees]
   before_action :set_attendee, only: [:update]
   before_action :set_user_side_event, only: [:create, :mark_attendance]
 
@@ -72,6 +72,12 @@ class Api::V1::EventAttendeesController < ApplicationController
       AttendeeMailer.event_reminder(attendee, @event).deliver_now
     end
     render json: { message: 'Notifications sent successfully' }, status: :ok
+  end
+
+  def unique_attendees
+    attendees = current_user.event_attendees.all
+    unique_attendees = attendees.select(:email).distinct
+    render json: unique_attendees, status: :ok
   end
   
   private

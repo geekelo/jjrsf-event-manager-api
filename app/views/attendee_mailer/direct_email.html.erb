@@ -31,9 +31,9 @@
     <div class="email-container">
       <h2>Hello <%= @attendee.name %>,</h2>
 
-      <p><%= @body.gsub("\n", "<br>").html_safe %></p>
+      <p><%= auto_link(@body.gsub("\n", "<br>"), html: { target: '_blank' }).html_safe %></p>
 
-      <p>Warm regards,<br>Your Events Team</p>
+      <p>Warm regards,<br>JJRSF Programs Team</p>
 
       <div class="footer">
         <p>You received this email because you registered for <%= @event.name %>.</p>

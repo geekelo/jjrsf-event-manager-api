@@ -34,4 +34,11 @@ class AttendeeMailer < ApplicationMailer
     @event = event
     mail(to: @attendee.email, subject: 'Reminder: Upcoming Program')
   end
+
+  def publicity_email(attendee, subject, body)
+    @attendee = attendee
+    @subject = subject
+    @body = body
+    mail(to: @attendee.email, subject: @subject)
+  end
 end

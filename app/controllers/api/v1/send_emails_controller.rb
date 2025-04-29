@@ -43,6 +43,14 @@ class Api::V1:: SendEmailsController < ApplicationController
     render json: { message: 'Bulk emails sent successfully' }, status: :ok
   end
 
+  def publicity_email
+    attendees = current_user.event_attendees.all
+    unique_attendees = attendees.select(:email).distinct
+
+    AttendeeMailer.publicity_email(unique_attendees, email_params[:subject], email_params[:body]).deliver_now
+    render json: unique_attendees, status: :ok
+  end
+
   private
 
   def set_attendee
