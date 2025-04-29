@@ -4,11 +4,6 @@ class Api::V1:: SendEmailsController < ApplicationController
   before_action :set_attendee, only: [:direct_email]
 
   def direct_email
-    if @attendee.nil?
-      render json: { error: 'Attendee not found' }, status: :not_found
-      return
-    end
-
     email = @attendee.event_emails.new(email_params)
 
     AttendeeMailer.direct_email(@attendee, email_params[:subject], email_params[:body], @event).deliver_now
