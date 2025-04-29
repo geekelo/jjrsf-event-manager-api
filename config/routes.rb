@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       post "direct_email" => "send_emails#direct_email"
       post "bulk_email" => "send_emails#bulk_email"
       post "notify_attendees" => "event_attendees#notify_attendees"
+      post "publicity_email" => "send_emails#publicity_email"
+      get "unique_attendees" => "event_attendees#unique_attendees"
 
       resources :foundation_events, only: [:index, :show, :create, :update, :destroy]
       resources :event_streaming_platforms, only: [:index, :create, :update, :destroy]
