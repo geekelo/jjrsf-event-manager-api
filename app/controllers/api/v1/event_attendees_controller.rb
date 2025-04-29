@@ -1,5 +1,5 @@
 class Api::V1::EventAttendeesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :update, :notify_attendees, :unique_attendees]
+  before_action :authenticate_user!, only: [:index, :update, :notify_attendees]
   before_action :set_event, only: [:index, :update, :notify_attendees]
   before_action :set_attendee, only: [:update]
   before_action :set_user_side_event, only: [:create, :mark_attendance]
@@ -75,7 +75,7 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
 
   def unique_attendees
-    attendees = current_user.event_attendees.all
+    attendees = EventAttendee.all
     unique_attendees = attendees.select(:email).distinct
     render json: unique_attendees, status: :ok
   end
