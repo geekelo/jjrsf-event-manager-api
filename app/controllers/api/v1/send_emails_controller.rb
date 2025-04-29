@@ -24,6 +24,12 @@ class Api::V1:: SendEmailsController < ApplicationController
                 when 'offline'
                   @event.event_attendees.where(attended_offline: true) +
                     @event.event_quick_registrations.where(attended_offline: true)
+                when 'hybrid'
+                  @event.event_attendees.where(attended_online: true).or(@event.event_attendees.where(attended_offline: true)) +
+                    @event.event_quick_registrations.where(attended_online: true).or(@event.event_quick_registrations.where(attended_offline: true))
+                when 'not_attended'
+                  @event.event_attendees.where(attended_online: false, attended_offline: false) +
+                    @event.event_quick_registrations.where(attended_online: false, attended_offline: false)
                 else
                   @event.event_attendees + @event.event_quick_registrations
                 end
