@@ -44,9 +44,18 @@ class Api::V1:: SendEmailsController < ApplicationController
   end
 
   def publicity_email
-    unique_attendees = EventAttendee.all.uniq { |att| att.email }
-    AttendeeMailer.publicity_email(unique_attendees, email_params[:subject], email_params[:body]).deliver_now
-    render json: unique_attendees, status: :ok
+    # Combine both attendee sources, removing nils and duplicates by email
+    unique_attendees = (EventAttendee.all + EventQuickRegistration.all)
+                         .compact
+                         .select { |att| att.email.present? }
+                         .uniq { |att| att.email.downcase }
+  
+    # Send email to each attendee
+    unique_attendees.each do |attendee|
+      AttendeeMailer.publicity_email(attendee, email_params[:subject], email_params[:body]).deliver_later
+    end
+  
+    render json: { message: "Emails sent to #{unique_attendees.size} unique attendees." }, status: :ok
   end
 
   private
