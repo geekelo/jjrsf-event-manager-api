@@ -44,9 +44,7 @@ class Api::V1:: SendEmailsController < ApplicationController
   end
 
   def publicity_email
-    attendees = current_user.event_attendees.all
-    unique_attendees = attendees.select(:email).distinct
-
+    unique_attendees = EventAttendee.all.uniq { |att| att.email }
     AttendeeMailer.publicity_email(unique_attendees, email_params[:subject], email_params[:body]).deliver_now
     render json: unique_attendees, status: :ok
   end
