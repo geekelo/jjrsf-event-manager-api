@@ -16,13 +16,25 @@ class Api::V1:: SendEmailsController < ApplicationController
   end
 
   def bulk_email
-    attendees = @event.event_attendees
+    # Filter attendees based on attendance mode
+    attendees = case params[:mode]
+                when 'online'
+                  @event.event_attendees.where(attended_online: true) +
+                    @event.event_quick_registrations.where(attended_online: true)
+                when 'offline'
+                  @event.event_attendees.where(attended_offline: true) +
+                    @event.event_quick_registrations.where(attended_offline: true)
+                else
+                  @event.event_attendees + @event.event_quick_registrations
+                end
   
+    # Return an error if no attendees found
     if attendees.empty?
       render json: { error: 'No attendees found' }, status: :not_found
       return
     end
   
+    # Send email to each attendee
     attendees.each do |attendee|
       AttendeeMailer.bulk_email(attendee, email_params[:subject], email_params[:body], @event).deliver_now
     end
