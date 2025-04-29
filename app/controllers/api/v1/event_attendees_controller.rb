@@ -65,6 +65,14 @@ class Api::V1::EventAttendeesController < ApplicationController
       render json: { errors: attendee.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
+  def notify_attendees
+    attendees = @event.event_attendees
+    attendees.each do |attendee|
+      AttendeeMailer.event_reminder(attendee, @event).deliver_now
+    end
+    render json: { message: 'Notifications sent successfully' }, status: :ok
+  end
   
   private
 

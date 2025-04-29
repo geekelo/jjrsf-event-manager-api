@@ -12,4 +12,26 @@ class AttendeeMailer < ApplicationMailer
     @event = event
     mail(to: 'jjrsfoundation@gnail.com', subject: 'New Program Registration Notification')
   end
+
+  def direct_email(attendee, subject, body, event)
+    @attendee = attendee
+    @subject = subject
+    @body = body
+    @event = event
+    mail(to: @attendee.email, subject: @subject)
+  end
+
+  def bulk_email(attendee, subject, body, event)
+    @attendee = attendee
+    @subject = subject
+    @body = body
+    @event = event
+    mail(to: @attendee.email, subject: @subject)
+  end
+
+  def event_reminder(attendee, event)
+    @attendee = attendee
+    @event = event
+    mail(to: @attendee.email, subject: 'Reminder: Upcoming Program')
+  end
 end

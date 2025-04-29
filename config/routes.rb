@@ -18,8 +18,11 @@ Rails.application.routes.draw do
       post "verify_guest" => "event_quick_registrations#verify_guest"
       get "events" => "foundation_events#visible_events"
       get "access_front_desk" => "event_front_desks#authenticate_front_desk"
+      post "direct_email" => "send_emails#direct_email"
+      post "bulk_email" => "send_emails#bulk_email"
+      post "notify_attendees" => "event_attendees#notify_attendees"
 
-      resources :foundation_events, only: [:index, :show, :create, :update]
+      resources :foundation_events, only: [:index, :show, :create, :update, :destroy]
       resources :event_streaming_platforms, only: [:index, :create, :update, :destroy]
       resources :event_front_desks, only: [:index, :create, :update, :destroy]
       resources :event_attendees, only: [:index, :create, :update]

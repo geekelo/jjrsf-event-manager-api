@@ -1,6 +1,6 @@
 class Api::V1::FoundationEventsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :visible_events]
-  before_action :set_event, only: [:update]
+  before_action :set_event, only: [:update, :destroy]
 
   def index
     events = current_user.foundation_events
@@ -35,6 +35,14 @@ class Api::V1::FoundationEventsController < ApplicationController
       render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(@event) }, status: :ok
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @event.destroy
+      render json: { message: 'Event deleted successfully' }, status: :ok
+    else
+      render json: { errors: @event.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

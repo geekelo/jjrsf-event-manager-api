@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      .email-container {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: auto;
+      }
+
+      .footer {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: #777;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="email-container">
+      <h2>Hello <%= @attendee.name %>,</h2>
+
+      <p><%= @body.gsub("\n", "<br>").html_safe %></p>
+
+      <p>Warm regards,<br>Your Events Team</p>
+
+      <div class="footer">
+        <p>You received this email because you registered for <%= @event.name %>.</p>
+        <p style="font-size: 16px; color: #34495e;">
+          <strong>Event Link:</strong><br/>
+          <a href="<%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>" style="color: #3498db; word-break: break-all;">
+            <%= "#{ENV['FRONTEND_USER_URL']}/events/#{@event.unique_id}" %>
+          </a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
