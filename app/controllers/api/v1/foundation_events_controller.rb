@@ -1,5 +1,5 @@
 class Api::V1::FoundationEventsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :visible_events, :destroy]
+  before_action :authenticate_user!, except: [:show, :visible_events]
   before_action :set_event, only: [:update, :destroy]
 
   def index
