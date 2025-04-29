@@ -75,8 +75,7 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
 
   def unique_attendees
-    attendees = EventAttendee.all
-    unique_attendees = attendees.select(:email).distinct
+    unique_attendees = EventAttendee.all.uniq { |att| att.email }
     render json: unique_attendees, status: :ok
   end
   
