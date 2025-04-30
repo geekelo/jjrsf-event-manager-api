@@ -4,8 +4,6 @@ class Api::V1:: SendEmailsController < ApplicationController
   before_action :set_attendee, only: [:direct_email], except: [:publicity_email]
 
   def direct_email
-    email = @attendee.event_emails.new(email_params)
-
     AttendeeMailer.direct_email(@attendee, email_params[:subject], email_params[:body], @event).deliver_now
     render json: { message: 'Email sent successfully' }, status: :ok
   end
