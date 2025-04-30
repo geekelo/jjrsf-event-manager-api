@@ -17,13 +17,13 @@
   </p>
 
   <p style="font-size: 14px; color: #2d3436; margin: 5px 0;">
-    <strong>Email:</strong> <%= @attendee.email.presence || 'N/A %>
+    <strong>Email:</strong> <%= @attendee.email.presence || 'N/A' %>
   </p>
 
   <p style="font-size: 14px; color: #2d3436; margin: 5px 0;">
-    <strong>Phone:</strong> <%= @attendee.phone_number.presence || 'N/A' %> 
-    <% if @attendee.whatsapp_number.present? %>
-      | <strong>WhatsApp:</strong> <%= @attendee.whatsapp_number.presence || 'N/A  %>
+    <strong>Phone:</strong> <%= @attendee.phone.presence || 'N/A' %> 
+    <% if @attendee.whatsapp.present? %>
+      | <strong>WhatsApp:</strong> <%= @attendee.whatsapp.presence || 'N/A' %>
     <% end %>
   </p>
 
