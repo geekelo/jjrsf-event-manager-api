@@ -15,6 +15,12 @@ class Api::V1::EventAttendeesController < ApplicationController
       render json: { error: 'Registration deadline has passed' }, status: :unprocessable_entity
       return
     end
+
+    if email_already_exists?
+      render json: { error: 'Email already exists' }, status: :unprocessable_entity
+      return
+    end
+    
     attendee = @user_side_event.event_attendees.new(attendee_params)
 
     if attendee.save
@@ -99,5 +105,10 @@ class Api::V1::EventAttendeesController < ApplicationController
       :attended_online,
       :attended_offline,
     )
+  end
+
+  def email_already_exists?
+    @user_side_event.event_attendees.exists?(email: params[:event_attendee][:email]) ||
+    @user_side_event.event_quick_registrations.exists?(email: params[:event_attendee][:email])
   end
 end
