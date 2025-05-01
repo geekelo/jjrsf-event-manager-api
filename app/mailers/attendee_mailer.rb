@@ -39,6 +39,6 @@ class AttendeeMailer < ApplicationMailer
     @attendee = attendee
     @subject = subject
     @body = body
-    mail(to: @attendee, subject: @subject)
+    mail(to: @attendee.email, subject: @subject)
   end
 end
