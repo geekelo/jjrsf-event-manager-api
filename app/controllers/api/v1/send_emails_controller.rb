@@ -50,7 +50,7 @@ class Api::V1:: SendEmailsController < ApplicationController
   
     # Send email to each attendee
     unique_attendees.each do |attendee|
-      AttendeeMailer.publicity_email(attendee, email_params[:subject], email_params[:body]).deliver_later
+      AttendeeMailer.publicity_email(attendee, email_params[:subject], email_params[:body]).deliver_now
     end
   
     render json: { message: "Emails sent to #{unique_attendees.size} unique attendees." }, status: :ok
