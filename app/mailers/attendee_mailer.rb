@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class AttendeeMailer < ApplicationMailer
    default from: 'JJRSF Programs Team <no-reply@yourdomain.com>'
 
