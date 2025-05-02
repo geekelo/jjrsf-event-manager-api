@@ -54,8 +54,8 @@ class AttendeeMailer < ApplicationMailer
       whatsapp: att.try(:whatsapp) || att.try(:whatsapp_number),
       member: att.try(:member),
       otp: att.otp,
-      preferred_attendance: att.try(:preferred_attendance)
-      created_at: att.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+      preferred_attendance: att.try(:preferred_attendance),
+      created_at: att.try(:created_at)
     )
   end
 end
