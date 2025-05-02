@@ -11,6 +11,7 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
   def create
     if email_already_exists?
       render json: { error: 'Email already exists' }, status: :unprocessable_entity
+      return
     else
       guest = @user_side_event.event_quick_registrations.new(guest_params)
       if guest.save

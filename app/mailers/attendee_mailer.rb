@@ -55,6 +55,7 @@ class AttendeeMailer < ApplicationMailer
       member: att.try(:member),
       otp: att.otp,
       preferred_attendance: att.try(:preferred_attendance)
+      created_at: att.created_at.strftime('%Y-%m-%d %H:%M:%S'),
     )
   end
 end
