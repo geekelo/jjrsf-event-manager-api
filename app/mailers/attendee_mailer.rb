@@ -8,7 +8,7 @@ class AttendeeMailer < ApplicationMailer
   end
 
   def registration_notification(attendee, event)
-    @attendee = attendee
+    @attendee = normalize_attendee(attendee)
     @event = event
     mail(to: 'jjrsfoundation@gnail.com', subject: 'New Program Registration Notification')
   end
@@ -40,5 +40,19 @@ class AttendeeMailer < ApplicationMailer
     @subject = subject
     @body = body
     mail(to: @attendee.email, subject: @subject)
+  end
+
+  private
+
+  def normalize_attendee(att)
+    OpenStruct.new(
+      name: att.name,
+      email: att.email,
+      phone: att.try(:phone) || att.try(:phone_number),
+      whatsapp: att.try(:whatsapp) || att.try(:whatsapp_number),
+      member: att.try(:member),
+      otp: att.otp,
+      preferred_attendance: att.try(:preferred_attendance)
+    )
   end
 end
