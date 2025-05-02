@@ -49,15 +49,15 @@ class Api::V1::EventAttendeesController < ApplicationController
                 @user_side_event.event_quick_registrations.find_by(email: params[:email])
                end
   
-    return render json: { error: 'Unique ID or email is required' }, status: :unprocessable_entity unless attendee
+    return render json: { error: 'OTP or email is required' }, status: :unprocessable_entity unless attendee
   
     mode = params[:mode].to_s.downcase # expects 'online' or 'offline'
 
     case mode
     when 'online'
-      success = attendee.update(attended_online: true)
+      success = attendee&.update(attended_online: true)
     when 'offline'
-      success = attendee.update(attended_offline: true)
+      success = attendee&.update(attended_offline: true)
     else
       return render json: { error: 'Invalid attendance mode. Must be "online" or "offline".' }, status: :unprocessable_entity
     end
