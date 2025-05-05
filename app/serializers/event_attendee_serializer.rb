@@ -12,6 +12,8 @@ class EventAttendeeSerializer < ActiveModel::Serializer
              :attended_offline,
              :otp,
              :notes,
+             :family,
+             :family_members,
              :foundation_event_id,
              :created_at,
              :updated_at

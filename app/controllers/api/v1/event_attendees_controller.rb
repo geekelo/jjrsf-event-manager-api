@@ -118,6 +118,8 @@ class Api::V1::EventAttendeesController < ApplicationController
       :preferred_attendance,
       :attended_online,
       :attended_offline,
+      :family,
+      :family_members,
     )
   end
 
