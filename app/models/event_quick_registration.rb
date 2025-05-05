@@ -7,10 +7,12 @@ class EventQuickRegistration < ApplicationRecord
 
   def generate_unique_otp
     return if self.otp.present?
-
+  
     loop do
-      self.otp = SecureRandom.hex(3) # 6-character alphanumeric lowercase
-      break unless EventQuickRegistration.exists?(otp: self.otp)
+      letters = Array('a'..'z').sample(3).join
+      digits = rand(100..999).to_s
+      self.otp = "#{letters}#{digits}"
+      break unless EventAttendee.exists?(otp: self.otp)
     end
-  end
+  end  
 end
