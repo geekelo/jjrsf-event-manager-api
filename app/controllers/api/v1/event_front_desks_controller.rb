@@ -57,6 +57,6 @@ class Api::V1::EventFrontDesksController < ApplicationController
   end
   
   def front_desk_params
-    params.require(:event_front_desk).permit(:name)
+    params.require(:event_front_desk).permit(:name, :pin)
   end
 end
