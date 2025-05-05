@@ -84,3 +84,5 @@ production:
   database: jjrsf_event_manager_api_production
   username: jjrsf_event_manager_api
   password: <%= ENV["JJRSF_EVENT_MANAGER_API_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  prepared_statements: false
