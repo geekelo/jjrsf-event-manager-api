@@ -41,13 +41,27 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
 
   def mark_attendance
-    attendee = if params[:otp].present?
-                 @user_side_event.event_attendees.find_by(otp: params[:otp]) ||
-                 @user_side_event.event_quick_registrations.find_by(otp: params[:otp])
-               elsif params[:email].present?
-                @user_side_event.event_attendees.find_by(email: params[:email]) ||
-                @user_side_event.event_quick_registrations.find_by(email: params[:email])
-               end
+    attendee =  if params[:otp].present?
+                  @user_side_event.event_attendees.find_by(otp: params[:otp]) ||
+                  @user_side_event.event_quick_registrations.find_by(otp: params[:otp])
+                elsif params[:email].present?
+                  @user_side_event.event_attendees.find_by(email: params[:email]) ||
+                  @user_side_event.event_quick_registrations.find_by(email: params[:email])
+                elsif params[:name].present?
+                  name_query = "%#{params[:name]}%"
+                  @user_side_event.event_attendees.where('name ILIKE ?', name_query).first ||
+                  @user_side_event.event_quick_registrations.where('name ILIKE ?', name_query).first                
+                elsif params[:name].present?
+                  @user_side_event.event_attendees.find_by(name: params[:name]) ||
+                  @user_side_event.event_quick_registrations.find_by(name: params[:name])
+                elsif params[:phone].present?
+                  @user_side_event.event_attendees.find_by(phone: params[:phone]) ||
+                  @user_side_event.event_quick_registrations.find_by(phone: params[:phone]) ||                  
+                  @user_side_event.event_attendees.find_by(whatsapp: params[:phone]) ||
+                  @user_side_event.event_quick_registrations.find_by(whatsapp: params[:phone])
+                else
+                  nil
+                end
   
     return render json: { error: 'OTP or email is required' }, status: :unprocessable_entity unless attendee
   
