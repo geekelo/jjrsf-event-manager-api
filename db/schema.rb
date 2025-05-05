@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_24_102012) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_05_122933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_102012) do
     t.uuid "foundation_event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "family", default: false
+    t.string "family_members", default: [], array: true
     t.index ["email"], name: "index_event_attendees_on_email"
     t.index ["foundation_event_id"], name: "index_event_attendees_on_foundation_event_id"
     t.index ["otp"], name: "index_event_attendees_on_otp", unique: true
@@ -77,6 +79,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_24_102012) do
     t.uuid "foundation_event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "family", default: false
+    t.string "family_members", default: [], array: true
     t.index ["foundation_event_id"], name: "index_event_quick_registrations_on_foundation_event_id"
   end
 

@@ -37,7 +37,7 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
   private
 
   def guest_params
-    params.require(:guest).permit(:email, :name, :phone, :gender, :attended_online, :attended_offline)
+    params.require(:guest).permit(:email, :name, :phone, :gender, :attended_online, :attended_offline, :family, :family_members)
   end
 
   def email_already_exists?
