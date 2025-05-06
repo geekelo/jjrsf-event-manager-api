@@ -124,6 +124,9 @@ class Api::V1::EventAttendeesController < ApplicationController
   end
 
   def email_already_exists?
+    return false if params[:event_attendee][:email].blank? || params[:event_attendee][:email].nil?
+    
+    # Check if the email already exists in the event attendees or quick registrations
     @user_side_event.event_attendees.exists?(email: params[:event_attendee][:email]) ||
     @user_side_event.event_quick_registrations.exists?(email: params[:event_attendee][:email])
   end

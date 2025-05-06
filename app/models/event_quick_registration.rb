@@ -2,7 +2,8 @@ class EventQuickRegistration < ApplicationRecord
   belongs_to :foundation_event
   has_many :event_notes, dependent: :destroy
   before_validation :generate_unique_otp, on: :create
-
+  before_validation :assign_email, on: :create
+  
   private
 
   def generate_unique_otp
@@ -14,5 +15,11 @@ class EventQuickRegistration < ApplicationRecord
       self.otp = "#{letters}#{digits}"
       break unless EventAttendee.exists?(otp: self.otp)
     end
-  end  
+  end 
+  
+  def assign_email
+    if self.email.blank?
+      self.email = "none@email.com"
+    end
+  end
 end
