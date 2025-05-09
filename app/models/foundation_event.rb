@@ -14,13 +14,33 @@ class FoundationEvent < ApplicationRecord
 
   def update_status_if_needed
     today = Date.today
+    time_now = Time.now
 
-    if start_date <= today && end_date >= today
+    if end_date == today && end_time < time_now
+      update_column(:status, 'ongoing') unless status == 'completed'
+    elsif end_date == today && end_time > time_now
       update_column(:status, 'ongoing') unless status == 'ongoing'
+    elsif start_date == today && start_time <= time_now
+      update_column(:status, 'completed') unless status == 'ongoing'
     elsif end_date < today
       update_column(:status, 'completed') unless status == 'completed'
     else
       update_column(:status, 'upcoming') unless status == 'upcoming'
+    end
+  end
+
+  def update_registration_deadline_if_needed
+    today = Date.today
+    time_now = Time.now
+
+    if registration_deadline == today && registration_deadline_time > time_now
+      update_column(:registration_deadline_status, 'open') unless registration_deadline_status == 'open'
+    elsif registration_deadline == today && registration_deadline_time <= time_now
+      update_column(:registration_deadline_status, 'closed') unless registration_deadline_status == 'closed'
+    elsif registration_deadline < today 
+      update_column(:registration_deadline_status, 'closed') unless registration_deadline_status == 'closed'
+    else
+      update_column(:registration_deadline_status, 'open') unless registration_deadline_status == 'open'
     end
   end
 

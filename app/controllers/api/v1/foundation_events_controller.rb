@@ -4,9 +4,9 @@ class Api::V1::FoundationEventsController < ApplicationController
 
   def index
     events = current_user.foundation_events
-  
-    # Update the status before rendering
-    events.each(&:update_status_if_needed)
+
+    # Update the status and registration deadline for each event
+    events.each { |event| update_event_status(event) }
   
     render json: events, each_serializer: FoundationEventSerializer, status: :ok
   end
@@ -17,7 +17,10 @@ class Api::V1::FoundationEventsController < ApplicationController
       render json: { error: 'Event not found' }, status: :not_found
       return
     end
-    event.update_status_if_needed
+
+    # Update the status and registration deadline for the event
+    update_event_status(event)
+
     render json: event, serializer: FoundationEventSerializer, status: :ok
   end
 
@@ -32,6 +35,8 @@ class Api::V1::FoundationEventsController < ApplicationController
 
   def update
     if @event.update(event_params)
+      # Update the status and registration deadline for the event
+      update_event_status(event)
       render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(@event) }, status: :ok
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
@@ -57,7 +62,12 @@ class Api::V1::FoundationEventsController < ApplicationController
 
   private
 
+  def update_event_status(event)
+    event.update_status_if_needed
+    event.update_registration_deadline_if_needed
+  end
+
   def event_params
-    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :evaluation, :visibility, :registration_deadline) 
+    params.require(:event).permit(:name, :description, :start_date, :end_date, :status, :online, :onsite, :location, :evaluation, :visibility, :registration_deadline, :start_time, :end_time, :registration_deadline_time, :image_url) 
   end
 end
