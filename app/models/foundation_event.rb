@@ -19,6 +19,8 @@ class FoundationEvent < ApplicationRecord
       update_column(:status, 'ongoing') unless status == 'ongoing'
     elsif end_date < today
       update_column(:status, 'completed') unless status == 'completed'
+    else
+      update_column(:status, 'upcoming') unless status == 'upcoming'
     end
   end
 
