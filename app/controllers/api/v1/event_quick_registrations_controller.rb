@@ -17,7 +17,7 @@ class Api::V1::EventQuickRegistrationsController < ApplicationController
       if guest.save
         AttendeeMailer.registration_confirmation(guest, @user_side_event).deliver_now
         AttendeeMailer.registration_notification(guest, @user_side_event).deliver_now
-        render json: { message: 'Guest created successfully' }, status: :created
+        render json: { message: 'Guest created successfully', quick_registrations_attendee: EventQuickRegistrationSerializer.new(guest) }, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
