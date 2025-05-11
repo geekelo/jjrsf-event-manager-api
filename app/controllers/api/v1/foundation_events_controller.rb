@@ -36,7 +36,7 @@ class Api::V1::FoundationEventsController < ApplicationController
   def update
     if @event.update(event_params)
       # Update the status and registration deadline for the event
-      update_event_status(event)
+      update_event_status(@event)
       render json: { message: 'Event updated successfully', event: FoundationEventSerializer.new(@event) }, status: :ok
     else
       render json: { errors: event.errors.full_messages }, status: :unprocessable_entity
