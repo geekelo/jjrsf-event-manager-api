@@ -35,7 +35,7 @@ class FoundationEvent < ApplicationRecord
 
     if registration_deadline == today && registration_deadline_time > time_now
       update_column(:registration_deadline_status, 'open') unless registration_deadline_status == 'open'
-    elsif registration_deadline == today && registration_deadline_time <= time_now
+    elsif registration_deadline == today && registration_deadline_time >= time_now
       update_column(:registration_deadline_status, 'closed') unless registration_deadline_status == 'closed'
     elsif registration_deadline < today 
       update_column(:registration_deadline_status, 'closed') unless registration_deadline_status == 'closed'
