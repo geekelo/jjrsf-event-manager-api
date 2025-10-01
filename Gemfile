@@ -64,7 +64,7 @@ gem 'bcrypt'
 gem 'jwt'
 gem 'rack-cors'
 
-gem 'twilio-ruby', '~> 7.4'
+gem 'twilio-ruby', '~> 7.8'
 gem 'prawn'
 gem 'prawn-table'
 gem 'rails_autolink'
