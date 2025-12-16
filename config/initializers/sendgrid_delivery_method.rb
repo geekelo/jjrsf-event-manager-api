@@ -62,9 +62,9 @@ class SendGridDeliveryMethod
 end
 
 # Register custom delivery method
-ActionMailer::Base.add_delivery_method :sendgrid, SendGridDeliveryMethod
-ActionMailer::Base.class_attribute :sendgrid_settings, default: {}
+# ActionMailer::Base.add_delivery_method :sendgrid, SendGridDeliveryMethod
+# ActionMailer::Base.class_attribute :sendgrid_settings, default: {}
 
-# Configure ActionMailer (this runs for all envs; you can guard with Rails.env.production?)
-ActionMailer::Base.delivery_method = :sendgrid
-ActionMailer::Base.sendgrid_settings = { api_key: ENV["SENDGRID_API_KEY"] }
+# # Configure ActionMailer (this runs for all envs; you can guard with Rails.env.production?)
+# ActionMailer::Base.delivery_method = :sendgrid
+# ActionMailer::Base.sendgrid_settings = { api_key: ENV["SENDGRID_API_KEY"] }

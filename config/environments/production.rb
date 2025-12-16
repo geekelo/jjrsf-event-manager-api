@@ -105,4 +105,21 @@ Rails.application.configure do
   #   authentication: "plain",
   #   enable_starttls_auto: true
   # }
+  # Set Mailtrap settings for production (NO inbox_id needed for live sending)
+  config.action_mailer.delivery_method = :mailtrap
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  
+  config.after_initialize do
+    ActionMailer::Base.mailtrap_settings = {
+      api_token: ENV['MAILTRAP_API_TOKEN'],
+      inbox_id: ENV['MAILTRAP_INBOX_ID'],
+      sandbox: false,  # Use production API for live sending (sends real emails)
+      category: 'production'  # Optional: categorize emails for analytics
+      # NOTE: inbox_id is NOT needed for production - only for sandbox/development
+    }
+  end
+  
+  config.action_mailer.default_url_options = { host: ENV['HOST'] || 'jjrsf.org', protocol: 'https' }
+  config.action_mailer.default_options = { from: ENV.fetch('MAILTRAP_FROM_EMAIL', 'team@jjrsf.org') }  
 end
